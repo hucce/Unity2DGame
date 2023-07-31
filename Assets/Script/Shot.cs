@@ -5,9 +5,11 @@ using UnityEngine;
 public class Shot : MonoBehaviour
 {
     public float moveSpeed = 1.5f;
+    private float leftValue = 1f;
+    public float destroySecond = 3f;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         
     }
@@ -16,7 +18,26 @@ public class Shot : MonoBehaviour
     void Update()
     {
         Vector3 pos = new Vector3();
-        pos.x = moveSpeed * Time.deltaTime;
+        pos.x = moveSpeed * Time.deltaTime * leftValue;
         transform.Translate(pos);
+    }
+
+    public void Instance(bool isRight)
+    {
+        if(isRight == true)
+        {
+            leftValue = 1f;
+        }
+        else
+        {
+            leftValue = -1f;
+        }
+
+        Invoke("Delete", destroySecond);
+    }
+
+    private void Delete()
+    {
+        GameObject.Destroy(gameObject);
     }
 }

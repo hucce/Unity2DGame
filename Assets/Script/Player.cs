@@ -7,9 +7,9 @@ public class Player : MonoBehaviour
     public float moveSpeed = 0.6f;
     public float jumpForce = 0.5f;
     public GameObject shotObject = null;
-    public Transform shotPosition = null;
+    public Transform shotPositionR = null;
+    public Transform shotPositionL = null;
     private bool jumping = false;
-
 
     // Start is called before the first frame update
     private void Start()
@@ -20,7 +20,6 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-
         // 이동
         float h = Input.GetAxis("Horizontal");
         if (h == 0)
@@ -62,9 +61,19 @@ public class Player : MonoBehaviour
         bool shot = Input.GetButtonDown("Fire1");
         if(shot == true)
         {
-            GameObject.Instantiate(shotObject, shotPosition.position, shotPosition.rotation);
-        }
+            GetComponent<Animator>().SetTrigger("isShot");
 
+            // 총알 생성
+            if(GetComponent<SpriteRenderer>().flipX == false)
+            {
+                GameObject bullet = GameObject.Instantiate(shotObject, shotPositionR.position, shotPositionR.rotation);
+                bullet.GetComponent<Shot>().Instance(true);
+            }
+            else
+            {
+                GameObject.Instantiate(shotObject, shotPositionL.position, shotPositionL.rotation).GetComponent<Shot>().Instance(false);
+            }
+        }
     }
 
     private void Move(float h)

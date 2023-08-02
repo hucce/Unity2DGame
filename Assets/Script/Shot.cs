@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Shot : MonoBehaviour
 {
+    public int damage = 40;
     public float moveSpeed = 1.5f;
     private float leftValue = 1f;
     public float destroySecond = 3f;
@@ -39,5 +40,15 @@ public class Shot : MonoBehaviour
     private void Delete()
     {
         GameObject.Destroy(gameObject);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        // 충돌한 것이 적이었다면
+        if(collision.gameObject.tag == "Enemies")
+        {
+            // 총알을 삭제한다.
+            Delete();
+        }
     }
 }

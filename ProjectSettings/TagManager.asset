@@ -6,17 +6,18 @@ TagManager:
   tags:
   - Shot
   - Enemies
+  - Platform
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
+  - Platfrom
+  - Enemies
+  - Shot
+  - PlayerHit
   - 
   - 
   - 

@@ -8,6 +8,8 @@ public class Crab : MonoBehaviour
     private int currentHP = 100;
     public int maxHP = 100;
 
+    public int damage = 1;
+
     public float moveSpeed = 1.5f;
     public List<Vector3> targetVectors = new List<Vector3>();
     private int currentTaget = 0;

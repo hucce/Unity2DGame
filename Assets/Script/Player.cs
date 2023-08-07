@@ -19,14 +19,11 @@ public class Player : MonoBehaviour
     private bool isDeath = false;
     public float hitSecond = 0.6f;
 
-    public GameObject hpTextObj = null;
-    public GameObject gameOverObj = null;
-
     // Start is called before the first frame update
     private void Start()
     {
         currentHP = maxHP;
-        hpTextObj.GetComponent<TextMeshProUGUI>().text = currentHP.ToString() + "/" + maxHP.ToString();
+        UIManager.instance.ShowHP(currentHP, maxHP);
     }
 
     // Update is called once per frame
@@ -126,27 +123,32 @@ public class Player : MonoBehaviour
         }
         else if (collision.gameObject.tag == "Enemies")
         {
-            isHit = true;
-            // 적에게 닿았을 때
-            currentHP = currentHP - collision.gameObject.GetComponent<Crab>().damage;
+            OnHit(collision.gameObject.GetComponent<Crab>().damage);
+        }
+    }
 
-            hpTextObj.GetComponent<TextMeshProUGUI>().text = currentHP.ToString() + "/" + maxHP.ToString();
+    public void OnHit(int damage)
+    {
+        isHit = true;
+        // 적에게 닿았을 때
+        currentHP = currentHP - damage;
 
-            gameObject.layer = 9;
+        UIManager.instance.ShowHP(currentHP, maxHP);
 
-            // 맞았을 때에는 일정 시간 무적상태가 되야함
-            if(currentHP <= 0)
-            {
-                isDeath = true;
-                // 죽음
-                GetComponent<Animator>().SetBool("isDeath", true);
-                Invoke("ShowGameOver", 1.5f);
-            }
-            else
-            {
-                GetComponent<Animator>().SetTrigger("isHit");
-                Invoke("OffHit", hitSecond);
-            }
+        gameObject.layer = 9;
+
+        // 맞았을 때에는 일정 시간 무적상태가 되야함
+        if (currentHP <= 0)
+        {
+            isDeath = true;
+            // 죽음
+            GetComponent<Animator>().SetBool("isDeath", true);
+            Invoke("ShowGameOver", 1.5f);
+        }
+        else
+        {
+            GetComponent<Animator>().SetTrigger("isHit");
+            Invoke("OffHit", hitSecond);
         }
     }
 
@@ -158,6 +160,6 @@ public class Player : MonoBehaviour
 
     private void ShowGameOver()
     {
-        gameOverObj.SetActive(true);
+        UIManager.instance.ShowGameOver();
     }
 }

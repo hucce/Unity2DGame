@@ -33,4 +33,10 @@ public class UIManager : MonoBehaviour
         gameOverObj.GetComponent<TextMeshProUGUI>().text = "STAGE CLEAR";
         gameOverObj.SetActive(true);
     }
+
+    public void ShowGameClear()
+    {
+        gameOverObj.GetComponent<TextMeshProUGUI>().text = "GAME CLEAR";
+        gameOverObj.SetActive(true);
+    }
 }

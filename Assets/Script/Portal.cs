@@ -14,7 +14,15 @@ public class Portal : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             // 스테이지 클리어 UI표시
-            UIManager.instance.ShowStageClear();
+            if(nextStage == "GameEnd")
+            {
+                UIManager.instance.ShowGameClear();
+            }
+            else
+            {
+                UIManager.instance.ShowStageClear();
+            }
+            
             // 효과음!
             //GetComponent<AudioSource>().Play();
             Invoke("StageClear", intervalSecond);
@@ -23,6 +31,13 @@ public class Portal : MonoBehaviour
 
     private void StageClear()
     {
-        SceneManager.LoadScene(nextStage);
+        if(nextStage == "GameEnd")
+        {
+            Application.Quit();
+        }
+        else
+        {
+            SceneManager.LoadScene(nextStage);
+        }
     }
 }
